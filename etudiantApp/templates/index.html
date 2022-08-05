@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="">
+   <meta name="author" content="CSA">
+   <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+   <title>Gestion Etudiant</title>
+   <!-- <link rel="shortcut icon" href="logo_title.JPG" width="100%"> -->
+   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="bootstrapcss/dataTables.bootstrap.min.css">
+
+   <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+   <!-- <link href="{{ url_for('static', filename='bootstrapcss/dataTables.bootstrap.min.css') }}" rel="stylesheet"> -->
+   <link href="{{ url_for('static', filename='bootstrap/mystyle.css') }}" rel="stylesheet">
+ </head>
+ <body>
+   {% block content %}
+   <div id="login-page">
+     <div class="row">
+       <div class="col-lg-3"></div>
+         <div class="col-lg-6">
+           <div id="box">
+             <form class="form-login" action="/login" method="post">
+               <!-- <h2 class="form-login-heading" style="background: #f2f2f2;"><img src="login.ico" style="width: 180px; height: 100px;"></h2> -->
+               <h2 class="form-login-heading text-center" style="background: #f2f2f2;"> AUTHENTIFICATION </h2>
+               <div class="login-wrap">
+                 <div class="form-group input-group">
+                   <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                   <input type="text" class="form-control" placeholder="Utilisateur" autofocus id="username" name="username">
+                 </div>
+                 {{ username }}
+                 <div class="form-group input-group">
+                   <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                   <input type="password" class="form-control" placeholder="Mot de passe" autofocus id="pswd" name="pswd">
+                 </div><br>
+                     <button class="btn btn-default col-lg-6" type="reset"><i class="fa fa-refresh"></i> Reset</button>
+                     <button class="btn btn-primary col-lg-6" type="submit" id="se_connecter"><i class="fa fa-lock"></i> Se connecter</button>
+                   <hr><br>
+                   <br><br>
+                   <div id="error">
+                   </div>
+               </div>
+
+             </form>
+
+           </div>
+         </div>
+       <div class="col-lg-3"></div>
+     </div>
+   </div>
+   <script src="{{ url_for('static', filename='bootstrap/js/jquery-3.1.0.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='bootstrap/js/jquery.dataTables.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='bootstrap/js/dataTables.bootstrap.min.js') }}"></script>
+   <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+   {% endblock %}
+ </body>
+</html>
+<script>
+
+ $(function(){
+
+   $(document).on("click","#se_connecter",function(){
+
+   });
+
+ });
+</script>

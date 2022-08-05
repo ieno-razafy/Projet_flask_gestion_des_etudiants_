@@ -1,0 +1,23 @@
+.btn-edit, .btn-delete,.btn-delete-service,.btn-edit-service {
+font-size: 12px;
+height: 25px;
+width: 98%;
+border-style: none;
+color: white;
+}.btn-edit{
+border-radius: 5px;
+color: #DEAF18;
+background-color: transparent;
+}.btn-edit:hover{
+background-color: #DEAF18;k
+color: white;
+}.btn-delete{
+border-radius: 5px;
+color: #AE1726;
+background-color: transparent;
+}.btn-delete:hover{
+color: white;
+background-color:#AE1726;
+}#error{
+color: red;
+}

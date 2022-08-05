@@ -1,0 +1,221 @@
+{% extends "index.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="CSA">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+    <title>Gestion Etudiant</title>
+    <link rel="shortcut icon" href="logo_title.JPG" width="100%">
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bootstrapcss/dataTables.bootstrap.min.css">
+
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrapcss/dataTables.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/mystyle.css') }}" rel="stylesheet">
+    </head>
+    <body>
+      <div class="container">
+        <ul class="nav pull-right top-menu">
+          <li>
+            <button type="button"id="logout" class="btn btn-danger" ><span class="glyphicon glyphicon-log-out"></span> logout </button>
+            <!-- <a class="logout" href="logout.php"></a><span class="glyphicon glyphicon-log-out"> -->
+            </li>
+        </ul>
+
+        <h1 class="text-center"> Gestion des etudiants</h1>
+        <ul class="nav pull-right top-menu">
+          <li> <h2> Effectif Total: {{ total }} &nbsp; &nbsp; &nbsp; &nbsp;</h2></li>
+        </ul>
+        <div class="col-lg-12">
+        <div class="panel panel-default">
+        <button type="button" id="ajouter" class="btn btn-primary col-lg-3" data-toggle="modal" data-target="#modal-add">
+          Cliquer pour ajouter
+        </button>
+        </br></br></br>
+              <div class="table-responsive">
+                  <table id="sample_data" class="table table-bordered table-striped">
+                      <thead>
+                          <tr>
+                              <!-- <th>ID</th> -->
+                              <th>Photo</th>
+                              <th>Nom</th>
+                              <th>Prenom</th>
+                              <th>Cycle</th>
+                              <th>Mention</th>
+                              <th>Editer</th>
+                              <th>Suppr.</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for row in etudiant %}
+                          <tr>
+                              <!-- <td data-pk="{{row.id}}">{{row.id}}</td> -->
+                              <!-- <td><img src="{{ url_for('static', filename='img/') }}" style="width: 80px; height: 80px;"></td> -->
+                              <!-- <td data-name="photo" class="photo" data-type="text" data-pk="{{row.id}}" >{{row.photo}}</td> -->
+                              <td><img src="../static/img/{{row.photo}}" style="width: 80px; height: 80px;"></td>
+                              <td data-name="nom" class="nom" data-type="text" data-pk="{{row.id}}" >{{row.nom}}</td>
+                              <td data-name="prenom" class="prenom" data-type="text" data-pk="{{row.id}}">{{row.prenom}}</td>
+                              <td data-name="cycle" class="cycle" data-type="text" data-pk="{{row.id}}">{{row.cycle}}</td>
+                              <td data-name="mention" class="mention" data-type="text" data-pk="{{row.id}}">{{row.mention}}</td>
+                              <!-- <td><a href="javascript:del('{{row.id}}','{{row.nom}}')" class="btn btn-primary">Delete</a></td> -->
+                              <td><button type="button" data-name="{{row.nom}}" id="{{row.id}}" class="btn-edit" data-toggle="modal" data-target="#modal-add"><span class="glyphicon glyphicon-edit"></span></button></td>
+                              <td><button type="button" data-name="{{row.nom}}" id="{{row.id}}" class="btn-delete"><span class="glyphicon glyphicon-remove"></span></button></td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+            </div>
+          </div>
+      </div>
+      <script src="{{ url_for('static', filename='bootstrap/js/jquery-3.1.0.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='bootstrap/js/jquery.dataTables.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='bootstrap/js/dataTables.bootstrap.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+    </body>
+</html>
+
+
+<!--  fenetre modal ajout -->
+<div id="modal-add" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-md">
+   <div class="modal-content">
+     <div class="modal-header" id="header-modal" style="color: white; background: #286090;">
+       <button type="button" class="close" data-dismiss="modal">&times;</button>
+       <h4 ><span class="glyphicon glyphicon-user" style="margin-right:20px;"></span><span class="modal-title">Ajouter un(e) etudiant(e)</span>
+         <ul class="nav pull-right top-menu">
+           <!-- <li><a class="logout" href="logout.php"><?php echo $_SESSION['user'];?>&nbsp;&nbsp;&nbsp;Logout</a></li> -->
+           <li><span id="a_modifier"></span></li>
+         </ul>
+       </h4>
+
+     </div>
+     <div class="modal-body">
+       <form role="form" action = "/add" method="post"id="etudiant-form" style="background: #f2f2f2;" enctype = "multipart/form-data">
+         <input type="text" class="form-control" id="tfid" name="id"/>
+          <div class="row">
+            <div class="form-group col-md-5">
+              <label for="nom">Nom:</label>
+              <input type="text" class="form-control" placeholder="ex: RAKOTOZAFY " id="tfnom" name="nom"/>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="prenom">Prenom:</label>
+              <input type="text" class="form-control" placeholder="ex: Haja " id="tfprenom" name="prenom"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-md-5">
+              <label for="cycle"> Cycle: </label></br>
+                <select id="tfcycle" name="cycle">
+                  <option value="License" selected >License</option>
+                  <option value="Maitrise">Maitrise</option>
+                  <option value="Doctorat">Doctorat</option>
+                </select>
+            </div>
+            <div class="form-group col-md-5">
+              <label for="mention"> Mention:</label></br>
+                <select id="tfmention" name="mention">
+                  <option value="MISS" selected >MISS</option>
+                  <option value="ME">ME</option>
+                  <option value="MF">MF</option>
+                  <option value="Physique">Physique</option>
+                  <option value="Chimie">Chimie</option>
+                </select>
+            </div>
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="form-group col-md-5">
+              <label for="photo"> &nbsp;&nbsp;&nbsp;Photo:</label>
+                <input type = "file" name = "photo" class="form-control"/>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class=" col-md-5">
+                  <input name="cmdsubmit" id="btn-add" class="btn btn-primary from-control" type="submit" value="Submit" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class=" col-md-5">
+                  <input name="cmdsubmit" id="btnSaveEdit" class="btn btn-primary from-control" type="submit" value="Enregistrer" />
+              </div>
+            </div>
+          </div>
+       </form>
+     </div>
+     </div>
+  </div>
+  </div>
+</div>
+
+
+<script>
+let   isUpdate = false;
+  $(function(){
+
+    // Installation de l'objet dataTable
+    var dataTable = $('#sample_data').DataTable();
+
+    function changeFormAction(newAction){
+      $("form").attr("action",newAction);
+    }
+
+    //*********************** CRUD ************************
+    $(document).on("click","#ajouter",function(){
+      $("#btnSaveEdit").css("display","none");
+      $("#btn-add").css("display","block");
+      $(".nom").val("");
+      $(".prenom").val("");
+      $("#tfid").css("display","none");
+    });
+
+    //  Delete
+    $(document).on('click','.btn-delete',function(){
+      var id = $(this).attr("id");
+      var nom = $(this).attr("data-name");
+
+      if (confirm("Etes-vous sur de vouloir supprimer " + nom + " ?")){
+               window.location.href = '/delete/' + id;
+         }
+        })
+
+      //  Update
+      //----------------------- RECUPERATION DES DONNEES A MODIFIER -----------------------
+      $(document).on("click",".btn-edit",function(){
+        isUpdate = true;
+       var id = $(this).attr("id");
+        $(".modal-title").empty().append(" Modification ");
+        // $("#reset").css("display","none");
+        $("#btn-add").css("display","none");
+        $("#tfid").css("display","none");
+        $("#btnSaveEdit").css("display","block");
+        $.ajax({
+          url:"/getOne",
+          method:"POST",
+          data:{id:id},
+          success:function(data){
+            console.log(data);
+            var data = JSON.parse(data);
+            $("#tfid").val(id);
+            $("#tfnom").val(data.nom);
+            $("#tfprenom").val(data.prenom);
+            $("#tfcycle").val(data.cycle);
+            $("#tfmention").val(data.mention);
+            $("#a_modifier").empty().append('<img src="../static/img/'+ data.photo + '" style="width: 80px; height: 80px;">');
+            changeFormAction("/updateEtudiant");
+          }
+        });
+      });
+      //----------------------- FIN RECUPERATION DES DONNEES -----------------------
+    //*********************** FIN. CRUD ************************
+    $(document).on('click','#logout',function(){
+      alert("Le system de gestion des sessions n'est pas encore prise en charge!  Merci!");
+    })
+  });
+</script>
+{% endblock %}
